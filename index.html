@@ -36,14 +36,10 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <script>
-        const MASTER_PASSWORD = "292315";
-    </script>
-
     <header class="bg-brand-darkGreen border-b border-brand-gold/20 sticky top-0 z-50 px-4 py-3 shadow-lg">
         <div class="max-w-md mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <button onclick="abrirAdmin()" class="w-10 h-10 rounded-full bg-brand-gold flex items-center justify-center text-brand-black font-bold text-xl active:scale-95 transition-transform">
+                <button onclick="abrirAdmin()" class="w-10 h-10 rounded-full bg-brand-gold text-brand-darkGreen font-bold flex items-center justify-center shadow-md active:scale-95 transition-transform">
                     ZB
                 </button>
                 <div>
@@ -51,22 +47,23 @@
                     <p class="text-[10px] text-brand-gold font-medium tracking-widest uppercase">Premium Store</p>
                 </div>
             </div>
-            <span id="status-loja" class="inline-flex items-center text-xs px-2.5 py-1 rounded-full font-medium"></span>
+            <span id="status-loja" class="inline-flex items-center text-[11px] px-2.5 py-1 rounded-full font-semibold bg-red-500/10 text-red-400 border border-red-500/20">
+                Fechado
+            </span>
         </div>
     </header>
 
     <main id="tela-cliente" class="max-w-md mx-auto w-full flex-grow px-4 py-6 space-y-6">
-        
         <div class="relative">
             <i data-lucide="search" class="absolute left-4 top-3.5 h-4 w-4 text-gray-400"></i>
-            <input type="text" id="busca-produto" oninput="renderizarProdutos()" placeholder="Buscar sua bebida favorita..." class="w-full bg-brand-gray border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white focus:outline-none focus:border-brand-gold/50">
+            <input type="text" id="busca-produto" oninput="renderizarProdutos()" placeholder="Buscar sua bebida favorita..." class="w-full bg-brand-gray border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold/50 transition-colors">
         </div>
 
         <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex gap-3 items-start">
-            <i data-lucide="shopping-bag" class="text-amber-500 shrink-0 mt-0.5 w-5 h-5"></i>
+            <i data-lucide="shopping-bag" class="text-amber-500 shrink-0 mt-0.5 h-5 w-5"></i>
             <div>
                 <h4 class="text-sm font-semibold text-amber-500">Exclusivo para Retirada</h4>
-                <p class="text-xs text-gray-300 mt-0.5 leading-relaxed">Faça seu pedido online e retire imediatamente em nosso balcão de atendimento.</p>
+                <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Faça seu pedido online e retire imediatamente em nosso ponto comercial comercial sem filas.</p>
             </div>
         </div>
 
@@ -76,256 +73,283 @@
         </section>
 
         <section class="bg-brand-gray border border-white/5 rounded-2xl p-5 space-y-4 shadow-xl">
-            <h3 class="text-xs font-bold tracking-widest uppercase text-brand-gold flex items-center gap-2">
-                <i data-lucide="map-pin" class="w-4 h-4"></i> Ponto de Retirada
-            </h3>
-            <div class="text-sm space-y-1">
-                <p class="text-white font-medium" id="txt-endereco">Carregando endereço...</p>
-                <p class="text-gray-400 text-xs" id="txt-horario-info">Horário não definido</p>
+            <div class="flex items-center gap-2 border-b border-white/5 pb-3">
+                <i data-lucide="map-pin" class="text-brand-gold h-5 w-5"></i>
+                <h3 class="text-xs font-bold tracking-widest uppercase text-brand-gold">Ponto de Retirada</h3>
             </div>
-            <a id="btn-maps" href="#" target="_blank" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-black text-xs font-bold py-3 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wider transition-colors">
-                <i data-lucide="navigation" class="w-4 h-4"></i> Traçar Rota de Retirada
-            </a>
+            <div class="space-y-1">
+                <p id="txt-endereco" class="text-sm font-medium text-gray-200">Endereço não configurado</p>
+                <a id="link-maps" href="#" target="_blank" class="inline-flex items-center gap-1 text-xs text-brand-gold hover:underline mt-1">
+                    Ver no Google Maps <i data-lucide="external-link" class="h-3 w-3"></i>
+                </a>
+            </div>
+            <div class="pt-2 border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
+                <span>Horário de Funcionamento:</span>
+                <span id="txt-horario" class="font-medium text-gray-200">Não definido</span>
+            </div>
         </section>
     </main>
 
     <main id="tela-admin" class="hidden max-w-md mx-auto w-full flex-grow px-4 py-6 space-y-6">
-        <div class="flex items-center justify-between border-b border-brand-gray pb-4">
-            <h2 class="text-lg font-bold text-brand-gold flex items-center gap-2">
-                <i data-lucide="sliders"></i> Painel de Controle
-            </h2>
-            <button onclick="fecharAdmin()" class="bg-brand-gray text-xs px-3 py-1.5 rounded-lg text-gray-400 hover:text-white">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <div class="flex items-center gap-2">
+                <i data-lucide="sliders" class="text-brand-gold h-5 w-5"></i>
+                <h2 class="text-lg font-bold">Painel de Controle</h2>
+            </div>
+            <button onclick="sairAdmin()" class="text-xs bg-white/5 hover:bg-white/10 text-gray-300 px-3 py-1.5 rounded-lg transition-colors">
                 Sair do Painel
             </button>
         </div>
 
-        <div class="flex gap-2 border-b border-white/5 pb-2">
-            <button onclick="mudarAbaAdmin('produtos')" id="aba-btn-produtos" class="flex-1 text-xs py-2 rounded-lg font-bold uppercase tracking-wider bg-brand-gold text-brand-black">Produtos</button>
-            <button onclick="mudarAbaAdmin('config')" id="aba-btn-config" class="flex-1 text-xs py-2 rounded-lg font-bold uppercase tracking-wider bg-brand-gray text-gray-400">Configurações</button>
+        <div class="flex border-b border-white/5 text-sm">
+            <button onclick="mudarAba('produtos')" id="aba-produtos" class="flex-1 py-2.5 font-semibold text-center border-b-2 border-brand-gold text-brand-gold">Produtos</button>
+            <button onclick="mudarAba('config')" id="aba-config" class="flex-1 py-2.5 font-semibold text-center border-b-2 border-transparent text-gray-400">Configurações</button>
         </div>
 
-        <div id="admin-aba-produtos" class="space-y-6">
-            <div class="bg-brand-gray border border-white/5 rounded-xl p-4 space-y-4 shadow-lg">
-                <h3 class="text-xs font-bold uppercase text-brand-gold">Cadastrar Novo Produto</h3>
-                <div class="space-y-3 text-xs">
-                    <div>
-                        <label class="block text-gray-400 mb-1">Nome do Produto</label>
-                        <input type="text" id="form-nome" placeholder="Ex: Whisky Red Label 1L" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-gray-400 mb-1">Categoria</label>
-                            <select id="form-categoria" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
-                                <option value="Whisky">Whisky</option>
-                                <option value="Vodka">Vodka</option>
-                                <option value="Energéticos">Energéticos</option>
-                                <option value="Cervejas">Cervejas</option>
-                                <option value="Refrigerantes">Refrigerantes</option>
-                                <option value="Combos">Combos</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-gray-400 mb-1">Preço (R$)</label>
-                            <input type="number" step="0.01" id="form-preco" placeholder="Ex: 129.90" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
-                        </div>
+        <div id="conteudo-produtos" class="space-y-6">
+            <form id="form-produto" onsubmit="salvarProduto(event)" class="bg-brand-gray border border-white/5 rounded-2xl p-4 space-y-4">
+                <h3 class="text-xs font-bold tracking-widest uppercase text-brand-gold">Cadastrar / Editar Produto</h3>
+                <input type="hidden" id="prod-id">
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="col-span-2">
+                        <label class="text-[11px] text-gray-400 block mb-1">Nome do Produto</label>
+                        <input type="text" id="prod-nome" required class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
                     </div>
                     <div>
-                        <label class="block text-gray-400 mb-1">Link da Imagem (Opcional)</label>
-                        <input type="text" id="form-imagem" placeholder="Deixe vazio para usar a imagem padrão" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                        <label class="text-[11px] text-gray-400 block mb-1">Categoria</label>
+                        <select id="prod-categoria" required class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
+                            <option value="Cervejas">Cervejas</option>
+                            <option value="Destilados">Destilados</option>
+                            <option value="Vinhos">Vinhos</option>
+                            <option value="Sem Álcool">Sem Álcool</option>
+                            <option value="Petiscos / Gelo">Petiscos / Gelo</option>
+                        </select>
                     </div>
-                    <button onclick="salvarProduto()" class="w-full bg-brand-gold text-brand-black font-bold py-3 rounded-lg uppercase tracking-wider text-xs">Adicionar ao Catálogo</button>
+                    <div>
+                        <label class="text-[11px] text-gray-400 block mb-1">Preço (R$)</label>
+                        <input type="number" step="0.01" id="prod-preco" required class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
+                    </div>
                 </div>
-            </div>
+                <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-darkGreen font-bold py-2.5 rounded-xl text-sm transition-colors shadow-md">
+                    Salvar Produto
+                </button>
+            </form>
 
             <div class="space-y-3">
-                <h3 class="text-xs font-bold uppercase text-gray-400">Produtos no Estoque (<span id="admin-total-produtos">0</span>)</h3>
-                <div id="admin-lista-produtos" class="space-y-2"></div>
+                <h3 class="text-xs font-bold tracking-widest uppercase text-gray-400">Produtos Cadastrados</h3>
+                <div id="lista-produtos-admin" class="space-y-2"></div>
             </div>
         </div>
 
-        <div id="admin-aba-config" class="hidden bg-brand-gray border border-white/5 rounded-xl p-4 space-y-4 shadow-lg">
-            <h3 class="text-xs font-bold uppercase text-brand-gold">Gerenciar Informações da Loja</h3>
-            <div class="space-y-4 text-xs">
+        <div id="conteudo-config" class="hidden bg-brand-gray border border-white/5 rounded-2xl p-4 space-y-4">
+            <h3 class="text-xs font-bold tracking-widest uppercase text-brand-gold">Dados da Distribuidora</h3>
+            <div class="space-y-3">
                 <div>
-                    <label class="block text-gray-400 mb-1">WhatsApp de Vendas (Apenas números com DDD)</label>
-                    <input type="text" id="cfg-whatsapp" placeholder="Ex: 5541998820404" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                    <label class="text-[11px] text-gray-400 block mb-1">WhatsApp de Vendas (DDD + Número)</label>
+                    <input type="text" id="cfg-whatsapp" placeholder="Ex: 41999999999" class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
                 </div>
                 <div>
-                    <label class="block text-gray-400 mb-1">Link do Perfil do Instagram (Sem o @)</label>
-                    <input type="text" id="cfg-instagram" placeholder="Ex: zebebidas" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                    <label class="text-[11px] text-gray-400 block mb-1">Instagram (Link completo)</label>
+                    <input type="text" id="cfg-instagram" class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
                 </div>
                 <div>
-                    <label class="block text-gray-400 mb-1">Endereço Completo do Ponto comercial</label>
-                    <input type="text" id="cfg-endereco" placeholder="Ex: Rua Direta, 400 - Bairro, Curitiba - PR" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                    <label class="text-[11px] text-gray-400 block mb-1">Endereço de Retirada</label>
+                    <input type="text" id="cfg-endereco" class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
                 </div>
                 <div>
-                    <label class="block text-gray-400 mb-1">URL de Compartilhamento do Google Maps</label>
-                    <input type="text" id="cfg-maps" placeholder="Cole a URL gerada pelo Google Maps" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                    <label class="text-[11px] text-gray-400 block mb-1">Link do Google Maps</label>
+                    <input type="text" id="cfg-maps" class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-gray-400 mb-1">Hora de Abertura (Ex: 18)</label>
-                        <input type="number" id="cfg-abertura" placeholder="18" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                        <label class="text-[11px] text-gray-400 block mb-1">Horário de Abertura</label>
+                        <input type="time" id="cfg-abre" class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
                     </div>
                     <div>
-                        <label class="block text-gray-400 mb-1">Hora de Fechamento (Ex: 2)</label>
-                        <input type="number" id="cfg-fechamento" placeholder="2" class="w-full bg-brand-black border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-gold">
+                        <label class="text-[11px] text-gray-400 block mb-1">Horário de Fechamento</label>
+                        <input type="time" id="cfg-fecha" class="w-full bg-brand-black border border-white/10 rounded-xl p-2.5 text-sm focus:outline-none focus:border-brand-gold/50">
                     </div>
                 </div>
-                <button onclick="salvarConfiguracoes()" class="w-full bg-brand-gold text-brand-black font-bold py-3 rounded-lg uppercase tracking-wider text-xs">Salvar Alterações</button>
             </div>
+            <button onclick="salvarConfiguracoes()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-brand-darkGreen font-bold py-2.5 rounded-xl text-sm transition-colors shadow-md mt-2">
+                Salvar Configurações
+            </button>
         </div>
     </main>
 
-    <footer class="bg-brand-black border-t border-brand-gray px-4 py-6 mt-6 text-center space-y-4">
-        <div class="max-w-md mx-auto flex justify-center gap-4" id="footer-redes"></div>
-        <p class="text-[10px] text-gray-500">© 2026 Zé Bebidas. Venda proibida para menores de 18 anos. Se beber, não dirija.</p>
+    <footer class="bg-brand-gray border-t border-white/5 px-4 py-4 sticky bottom-0 z-50">
+        <div id="barra-carrinho" class="max-w-md mx-auto flex items-center justify-between hidden">
+            <div class="flex items-center gap-2">
+                <div class="relative bg-brand-gold/10 p-2.5 rounded-xl text-brand-gold">
+                    <i data-lucide="shopping-cart" class="h-5 w-5"></i>
+                    <span id="car-qtd" class="absolute -top-1.5 -right-1.5 bg-brand-gold text-brand-darkGreen font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-gray">0</span>
+                </div>
+                <div>
+                    <p class="text-[11px] text-gray-400">Total do pedido</p>
+                    <p id="car-total" class="text-base font-bold text-white">R$ 0,00</p>
+                </div>
+            </div>
+            <button onclick="enviarPedido()" class="bg-brand-gold hover:bg-brand-goldHover text-brand-darkGreen font-bold px-6 py-3 rounded-xl text-sm flex items-center gap-2 transition-colors shadow-lg">
+                Enviar via WhatsApp <i data-lucide="chevron-right" class="h-4 w-4"></i>
+            </button>
+        </div>
+        <div id="footer-credito" class="max-w-md mx-auto text-center text-[10px] text-gray-500 tracking-wider uppercase">
+            © 2026 Zé Bebidas — Todos os direitos reservados.
+        </div>
     </footer>
 
     <script>
-        let produtos = JSON.parse(localStorage.getItem('ze_bebidas_produtos')) || [];
-        let CONFIG = JSON.parse(localStorage.getItem('ze_bebidas_config')) || {
-            whatsappNumero: "5541998820404",
-            instagramUser: "",
-            endereco: "",
-            googleMapsUrl: "#",
-            horarioAbertura: 18,
-            horarioFechamento: 2
+        const MASTER_PASSWORD = "292315";
+        
+        let appData = {
+            produtos: [],
+            config: {
+                whatsapp: '', instagram: '', endereco: '', maps: '', abre: '', fecha: ''
+            }
         };
-        let categoriaAtiva = "Todos";
 
+        let carrinho = {};
+        let categoriaAtiva = "Todas";
+
+        // Inicialização do Banco de Dados Local
+        if (localStorage.getItem('zebebidas_db')) {
+            appData = JSON.parse(localStorage.getItem('zebebidas_db'));
+        } else {
+            localStorage.setItem('zebebidas_db', JSON.stringify(appData));
+        }
+
+        function salvarDB() {
+            localStorage.setItem('zebebidas_db', JSON.stringify(appData));
+            renderizarProdutos();
+            renderizarProdutosAdmin();
+            atualizarInfosPublicas();
+        }
+
+        // Navegação Administrativa
         function abrirAdmin() {
-            const senha = prompt("Insira a senha de acesso ao gerenciador:");
+            const senha = prompt("Digite a senha master de acesso:");
             if (senha === MASTER_PASSWORD) {
                 document.getElementById('tela-cliente').classList.add('hidden');
+                document.getElementById('footer-credito').classList.add('hidden');
+                document.getElementById('barra-carrinho').classList.add('hidden');
                 document.getElementById('tela-admin').classList.remove('hidden');
-                carregarFormConfig();
-                renderizerAdminProdutos();
+                mudarAba('produtos');
+                renderizarProdutosAdmin();
+                carregarCamposConfig();
             } else if (senha !== null) {
-                alert("Acesso negado: Senha incorreta.");
+                alert("Senha incorreta!");
             }
         }
 
-        function fecharAdmin() {
+        function sairAdmin() {
             document.getElementById('tela-admin').classList.add('hidden');
             document.getElementById('tela-cliente').classList.remove('hidden');
-            inicializarAppCliente();
+            document.getElementById('footer-credito').classList.remove('hidden');
+            atualizarCarrinho();
         }
 
-        function mudarAbaAdmin(aba) {
-            if(aba === 'produtos') {
-                document.getElementById('admin-aba-produtos').classList.remove('hidden');
-                document.getElementById('admin-aba-config').classList.add('hidden');
-                document.getElementById('aba-btn-produtos').className = "flex-1 text-xs py-2 rounded-lg font-bold uppercase tracking-wider bg-brand-gold text-brand-black";
-                document.getElementById('aba-btn-config').className = "flex-1 text-xs py-2 rounded-lg font-bold uppercase tracking-wider bg-brand-gray text-gray-400";
+        function mudarAba(aba) {
+            if (aba === 'produtos') {
+                document.getElementById('aba-produtos').className = "flex-1 py-2.5 font-semibold text-center border-b-2 border-brand-gold text-brand-gold";
+                document.getElementById('aba-config').className = "flex-1 py-2.5 font-semibold text-center border-b-2 border-transparent text-gray-400";
+                document.getElementById('conteudo-produtos').classList.remove('hidden');
+                document.getElementById('conteudo-config').classList.add('hidden');
             } else {
-                document.getElementById('admin-aba-config').classList.remove('hidden');
-                document.getElementById('admin-aba-produtos').classList.add('hidden');
-                document.getElementById('aba-btn-config').className = "flex-1 text-xs py-2 rounded-lg font-bold uppercase tracking-wider bg-brand-gold text-brand-black";
-                document.getElementById('aba-btn-produtos').className = "flex-1 text-xs py-2 rounded-lg font-bold uppercase tracking-wider bg-brand-gray text-gray-400";
+                document.getElementById('aba-config').className = "flex-1 py-2.5 font-semibold text-center border-b-2 border-brand-gold text-brand-gold";
+                document.getElementById('aba-produtos').className = "flex-1 py-2.5 font-semibold text-center border-b-2 border-transparent text-gray-400";
+                document.getElementById('conteudo-config').classList.remove('hidden');
+                document.getElementById('conteudo-produtos').classList.add('hidden');
             }
         }
 
-        function carregarFormConfig() {
-            document.getElementById('cfg-whatsapp').value = CONFIG.whatsappNumero;
-            document.getElementById('cfg-instagram').value = CONFIG.instagramUser;
-            document.getElementById('cfg-endereco').value = CONFIG.endereco;
-            document.getElementById('cfg-maps').value = CONFIG.googleMapsUrl;
-            document.getElementById('cfg-abertura').value = CONFIG.horarioAbertura;
-            document.getElementById('cfg-fechamento').value = CONFIG.horarioFechamento;
-        }
+        // Lógica de Produtos
+        function salvarProduto(e) {
+            e.preventDefault();
+            const id = document.getElementById('prod-id').value;
+            const nome = document.getElementById('prod-nome').value;
+            const categoria = document.getElementById('prod-categoria').value;
+            const preco = parseFloat(document.getElementById('prod-preco').value);
 
-        function salvarConfiguracoes() {
-            CONFIG.whatsappNumero = document.getElementById('cfg-whatsapp').value.trim();
-            CONFIG.instagramUser = document.getElementById('cfg-instagram').value.trim();
-            CONFIG.endereco = document.getElementById('cfg-endereco').value.trim();
-            CONFIG.googleMapsUrl = document.getElementById('cfg-maps').value.trim();
-            CONFIG.horarioAbertura = parseInt(document.getElementById('cfg-abertura').value) || 18;
-            CONFIG.horarioFechamento = parseInt(document.getElementById('cfg-fechamento').value) || 2;
-
-            localStorage.setItem('ze_bebidas_config', JSON.stringify(CONFIG));
-            alert("Informações updated com sucesso!");
-            inicializarAppCliente();
-        }
-
-        function salvarProduto() {
-            const nome = document.getElementById('form-nome').value.trim();
-            const categoria = document.getElementById('form-categoria').value;
-            const preco = parseFloat(document.getElementById('form-preco').value);
-            let imagem = document.getElementById('form-imagem').value.trim();
-
-            if (!nome || isNaN(preco)) {
-                alert("Erro: Preencha o nome e o valor do produto.");
-                return;
-            }
-            if (!imagem) {
-                imagem = "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=500";
+            if (id) {
+                const index = appData.produtos.findIndex(p => p.id === id);
+                if (index !== -1) appData.produtos[index] = { id, nome, categoria, preco };
+            } else {
+                const novoProd = { id: Date.now().toString(), nome, categoria, preco };
+                appData.produtos.push(novoProd);
             }
 
-            produtos.push({ id: Date.now(), categoria, nome, preco, imagem });
-            localStorage.setItem('ze_bebidas_produtos', JSON.stringify(produtos));
+            document.getElementById('form-produto').reset();
+            document.getElementById('prod-id').value = '';
+            salvarDB();
+        }
 
-            document.getElementById('form-nome').value = '';
-            document.getElementById('form-preco').value = '';
-            document.getElementById('form-imagem').value = '';
-
-            renderizerAdminProdutos();
-            alert("Produto incluído no catálogo.");
+        function editarProduto(id) {
+            const prod = appData.produtos.find(p => p.id === id);
+            if (prod) {
+                document.getElementById('prod-id').value = prod.id;
+                document.getElementById('prod-nome').value = prod.nome;
+                document.getElementById('prod-categoria').value = prod.categoria;
+                document.getElementById('prod-preco').value = prod.preco;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         function excluirProduto(id) {
-            if (confirm("Confirmar remoção permanente deste item?")) {
-                produtos = produtos.filter(p => p.id !== id);
-                localStorage.setItem('ze_bebidas_produtos', JSON.stringify(produtos));
-                renderizerAdminProdutos();
+            if (confirm("Deseja realmente remover este item?")) {
+                appData.produtos = appData.produtos.filter(p => p.id !== id);
+                if (carrinho[id]) delete carrinho[id];
+                salvarDB();
             }
         }
 
-        function renderizerAdminProdutos() {
-            document.getElementById('admin-total-produtos').innerText = produtos.length;
-            const container = document.getElementById('admin-lista-produtos');
-            if (produtos.length === 0) {
-                container.innerHTML = `<p class="text-center text-xs text-gray-500 py-4">Nenhum registro encontrado.</p>`;
+        // Lógica de Configurações
+        function carregarCamposConfig() {
+            document.getElementById('cfg-whatsapp').value = appData.config.whatsapp || '';
+            document.getElementById('cfg-instagram').value = appData.config.instagram || '';
+            document.getElementById('cfg-endereco').value = appData.config.endereco || '';
+            document.getElementById('cfg-maps').value = appData.config.maps || '';
+            document.getElementById('cfg-abre').value = appData.config.abre || '';
+            document.getElementById('cfg-fecha').value = appData.config.fecha || '';
+        }
+
+        function salvarConfiguracoes() {
+            appData.config.whatsapp = document.getElementById('cfg-whatsapp').value.replace(/\D/g, '');
+            appData.config.instagram = document.getElementById('cfg-instagram').value;
+            appData.config.endereco = document.getElementById('cfg-endereco').value;
+            appData.config.maps = document.getElementById('cfg-maps').value;
+            appData.config.abre = document.getElementById('cfg-abre').value;
+            appData.config.fecha = document.getElementById('cfg-fecha').value;
+            
+            salvarDB();
+            alert("Configurações salvas com sucesso!");
+        }
+
+        // Renderização das Telas
+        function renderizarProdutosAdmin() {
+            const container = document.getElementById('lista-produtos-admin');
+            if (appData.produtos.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500 text-center py-4">Nenhum produto cadastrado.</p>`;
                 return;
             }
-            container.innerHTML = produtos.map(prod => `
-                <div class="bg-brand-gray p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-                    <div class="flex items-center gap-3">
-                        <img src="${prod.imagem}" class="w-10 h-10 object-cover rounded-lg">
-                        <div>
-                            <p class="font-semibold text-white">${prod.nome}</p>
-                            <p class="text-brand-gold">R$ ${prod.preco.toFixed(2).replace('.', ',')} <span class="text-gray-500">| ${prod.categoria}</span></p>
-                        </div>
+            container.innerHTML = appData.produtos.map(p => `
+                <div class="bg-brand-black border border-white/5 rounded-xl p-3 flex justify-between items-center text-sm">
+                    <div>
+                        <p class="font-semibold text-white">${p.nome}</p>
+                        <p class="text-[10px] text-brand-gold mt-0.5">${p.categoria} • R$ ${p.preco.toFixed(2)}</p>
                     </div>
-                    <button onclick="excluirProduto(${prod.id})" class="text-red-500 hover:text-red-400 p-2">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
+                    <div class="flex gap-1">
+                        <button onclick="editarProduto('${p.id}')" class="p-2 bg-white/5 hover:bg-white/10 text-gray-300 rounded-lg"><i data-lucide="edit-3" class="h-4 w-4"></i></button>
+                        <button onclick="excluirProduto('${p.id}')" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg"><i data-lucide="trash-2" class="h-4 w-4"></i></button>
+                    </div>
                 </div>
             `).join('');
             lucide.createIcons();
         }
 
-        function inicializarAppCliente() {
-            document.getElementById('txt-endereco').innerText = CONFIG.endereco || "Endereço não cadastrado";
-            document.getElementById('txt-horario-info').innerText = `Funcionamento: Das ${CONFIG.horarioAbertura}h às ${CONFIG.horarioFechamento}h`;
-            document.getElementById('btn-maps').href = CONFIG.googleMapsUrl || "#";
-
-            const footerRedes = document.getElementById('footer-redes');
-            let redesHtml = `<a href="https://wa.me/${CONFIG.whatsappNumero}" target="_blank" class="w-10 h-10 rounded-full bg-brand-gray flex items-center justify-center text-gray-400 hover:text-green-500"><i data-lucide="phone" class="w-5 h-5"></i></a>`;
-            if (CONFIG.instagramUser) {
-                redesHtml += `<a href="https://instagram.com/${CONFIG.instagramUser}" target="_blank" class="w-10 h-10 rounded-full bg-brand-gray flex items-center justify-center text-gray-400 hover:text-pink-500"><i data-lucide="instagram" class="w-5 h-5"></i></a>`;
-            }
-            if (CONFIG.googleMapsUrl && CONFIG.googleMapsUrl !== "#") {
-                redesHtml += `<a href="${CONFIG.googleMapsUrl}" target="_blank" class="w-10 h-10 rounded-full bg-brand-gray flex items-center justify-center text-gray-400 hover:text-brand-gold"><i data-lucide="map-pin" class="w-5 h-5"></i></a>`;
-            }
-            footerRedes.innerHTML = redesHtml;
-
-            const hora = new Date().getHours();
-            const estaAberto = (hora >= CONFIG.horarioAbertura || hora < CONFIG.horarioFechamento);
-            const statusEl = document.getElementById('status-loja');
+        function renderizarProdutos() {
+            const grid = document.getElementById('grid-produtos');
+            const termoBusca = document.getElementById('busca-produto').value.toLowerCase();
             
-            if (estaAberto) {
-                statusEl.className = "inline-flex items-center bg-green-500/10 text-green-500 border border-green-500/20 text-xs px-2.5 py-1 rounded-full font-medium";
-                statusEl.innerHTML = `<span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-green-500"></span> Aberto`;
-            } else {
-                statusEl.className = "inline-flex items-center bg-red-500/10 text-red-500 border border-red-500/20 
+            // Renderizar Categorias Ativas Dinamicamente
+            const categoriasUnicas = ["Todas", ...new Set(appData.produtos.map(p => p.categoria))];
+            const catContainer = document.getElementById('lista-categorias');
