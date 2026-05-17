@@ -39,7 +39,7 @@
     <header class="bg-brand-darkGreen border-b border-brand-gold/20 sticky top-0 z-50 px-4 py-3 shadow-lg">
         <div class="max-w-md mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <button onclick="abrirAdmin()" class="w-10 h-10 rounded-full bg-brand-gold text-brand-darkGreen font-bold flex items-center justify-center shadow-md active:scale-95 transition-transform">
+                <button onclick="abrirAdminManual()" class="w-10 h-10 rounded-full bg-brand-gold text-brand-darkGreen font-bold flex items-center justify-center shadow-md active:scale-95 transition-transform">
                     ZB
                 </button>
                 <div>
@@ -63,7 +63,7 @@
             <i data-lucide="shopping-bag" class="text-amber-500 shrink-0 mt-0.5 h-5 w-5"></i>
             <div>
                 <h4 class="text-sm font-semibold text-amber-500">Exclusivo para Retirada</h4>
-                <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Faça seu pedido online e retire imediatamente em nosso ponto comercial comercial sem filas.</p>
+                <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Faça seu pedido online e retire imediatamente em nosso ponto comercial sem filas.</p>
             </div>
         </div>
 
@@ -211,7 +211,6 @@
         let carrinho = {};
         let categoriaAtiva = "Todas";
 
-        // Inicialização do Banco de Dados Local
         if (localStorage.getItem('zebebidas_db')) {
             appData = JSON.parse(localStorage.getItem('zebebidas_db'));
         } else {
@@ -225,23 +224,33 @@
             atualizarInfosPublicas();
         }
 
-        // Navegação Administrativa
-        function abrirAdmin() {
+        function liberarAcessoAdmin() {
+            document.getElementById('tela-cliente').classList.add('hidden');
+            document.getElementById('footer-credito').classList.add('hidden');
+            document.getElementById('barra-carrinho').classList.add('hidden');
+            document.getElementById('tela-admin').classList.remove('hidden');
+            mudarAba('produtos');
+            renderizarProdutosAdmin();
+            carregarCamposConfig();
+        }
+
+        function abrirAdminManual() {
             const senha = prompt("Digite a senha master de acesso:");
             if (senha === MASTER_PASSWORD) {
-                document.getElementById('tela-cliente').classList.add('hidden');
-                document.getElementById('footer-credito').classList.add('hidden');
-                document.getElementById('barra-carrinho').classList.add('hidden');
-                document.getElementById('tela-admin').classList.remove('hidden');
-                mudarAba('produtos');
-                renderizarProdutosAdmin();
-                carregarCamposConfig();
+                liberarAcessoAdmin();
             } else if (senha !== null) {
                 alert("Senha incorreta!");
             }
         }
 
+        function verificarUrlHash() {
+            if (window.location.hash === '#admin') {
+                liberarAcessoAdmin();
+            }
+        }
+
         function sairAdmin() {
+            window.location.hash = '';
             document.getElementById('tela-admin').classList.add('hidden');
             document.getElementById('tela-cliente').classList.remove('hidden');
             document.getElementById('footer-credito').classList.remove('hidden');
@@ -262,7 +271,6 @@
             }
         }
 
-        // Lógica de Produtos
         function salvarProduto(e) {
             e.preventDefault();
             const id = document.getElementById('prod-id').value;
@@ -302,7 +310,6 @@
             }
         }
 
-        // Lógica de Configurações
         function carregarCamposConfig() {
             document.getElementById('cfg-whatsapp').value = appData.config.whatsapp || '';
             document.getElementById('cfg-instagram').value = appData.config.instagram || '';
@@ -324,7 +331,6 @@
             alert("Configurações salvas com sucesso!");
         }
 
-        // Renderização das Telas
         function renderizarProdutosAdmin() {
             const container = document.getElementById('lista-produtos-admin');
             if (appData.produtos.length === 0) {
@@ -350,6 +356,5 @@
             const grid = document.getElementById('grid-produtos');
             const termoBusca = document.getElementById('busca-produto').value.toLowerCase();
             
-            // Renderizar Categorias Ativas Dinamicamente
             const categoriasUnicas = ["Todas", ...new Set(appData.produtos.map(p => p.categoria))];
-            const catContainer = document.getElementById('lista-categorias');
+            const catContainer = document.getElementById('lista-categoria
